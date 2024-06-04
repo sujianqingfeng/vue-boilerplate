@@ -15,10 +15,7 @@
     "yaml"
   ],
   "eslint.experimental.useFlatConfig": true,
-  "cSpell.words": [
-    "Pinia",
-    "sujian",
-    "unocss",
-    "unplugin"
-  ]
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.preferences.autoImportFileExcludePatterns": ["vue-router$"],
+  "cSpell.words": ["Pinia", "sujian", "unocss", "unplugin"]
 }
