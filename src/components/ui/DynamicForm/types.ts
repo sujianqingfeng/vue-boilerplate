@@ -1,7 +1,12 @@
 import type { SelectWithOptionsProps } from '../SelectWithOptions'
 import type { InputProps } from 'element-plus'
 
-type CommonSchema = { label?: string; placeholder?: string; required?: boolean }
+type CommonSchema = {
+  label?: string
+  placeholder?: string
+  required?: boolean
+  labelWidth?: string
+}
 
 type FormSelectSchema = CommonSchema & {
   type: 'select'
@@ -17,4 +22,12 @@ type FormInputSchema = CommonSchema & {
   onChange?: (value: any) => void
 }
 
-export type FormSchema = FormSelectSchema | FormInputSchema
+type FormDateRangeSchema = CommonSchema & {
+  type: 'date-range'
+  field: [string, string]
+}
+
+export type FormSchema =
+  | FormSelectSchema
+  | FormInputSchema
+  | FormDateRangeSchema

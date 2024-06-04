@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import type { ScaffoldProps } from './types'
+import { useProvideScaffold } from './use-scaffold'
 
-withDefaults(defineProps<ScaffoldProps>(), {})
+const props = withDefaults(defineProps<ScaffoldProps>(), {})
+
+useProvideScaffold(props)
 </script>
 
 <template>
-  <el-row>
-    <el-col v-for="(schema, index) in schemas" :key="index">
-      <span>{{ schema.label }}</span>
-    </el-col>
-  </el-row>
+  <Query v-bind="queryConfig" />
 </template>
