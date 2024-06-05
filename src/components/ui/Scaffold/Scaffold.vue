@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { ScaffoldProps } from './types'
-import { useProvideScaffold } from './use-scaffold'
+import { useProvideScaffold } from './composables/use-scaffold'
+import ScaffoldTable from './ScaffoldTable'
 
 const props = withDefaults(defineProps<ScaffoldProps>(), {})
 
-useProvideScaffold(props)
+const { onQuery, onReset } = useProvideScaffold(props)
 </script>
 
 <template>
-  <Query v-bind="queryConfig" />
+  <ScaffoldQuery v-bind="queryConfig" @query="onQuery" @reset="onReset" />
+  <ScaffoldTable v-bind="tableConfig" />
 </template>

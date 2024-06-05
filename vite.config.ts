@@ -1,3 +1,4 @@
+import path from 'path'
 import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import UnoCSS from 'unocss/vite'
@@ -8,10 +9,16 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 import VueDevTools from 'vite-plugin-vue-devtools'
-import TsconfigPaths from 'vite-tsconfig-paths'
+
+const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, './src')
+    }
+  },
   plugins: [
     VueRouter({
       dts: './types/typed-router.d.ts',
@@ -41,7 +48,6 @@ export default defineConfig({
       dirs: ['./src/composables'],
       resolvers: [ElementPlusResolver()]
     }),
-    VueDevTools(),
-    TsconfigPaths()
+    VueDevTools()
   ]
 })

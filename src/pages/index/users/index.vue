@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { BasePageResp, UserResp } from '~/api/types'
+import { sleep } from '~/utils/basic'
+
 definePage({
   meta: {
     title: 'Index'
@@ -32,6 +35,33 @@ const { props } = useScaffold({
         labelWidth: '200px'
       }
     ]
+  },
+  tableConfig: {
+    columns: [
+      {
+        label: 'Name',
+        prop: 'username'
+      }
+    ]
+  },
+  requestConfig: {
+    queryKey: ['user'],
+    queryFn: async () => {
+      await sleep(2000)
+      const r: BasePageResp<UserResp> = {
+        data: {
+          content: [
+            {
+              username: '11111',
+              age: 3,
+              id: 1
+            }
+          ],
+          total: 100
+        }
+      }
+      return r
+    }
   }
 })
 </script>

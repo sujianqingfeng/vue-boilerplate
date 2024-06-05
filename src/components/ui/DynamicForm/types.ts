@@ -1,5 +1,6 @@
 import type { SelectWithOptionsProps } from '../SelectWithOptions'
 import type { InputProps } from 'element-plus'
+import { DateRangeProps } from '../DateRange/types'
 
 type CommonSchema = {
   label?: string
@@ -25,6 +26,7 @@ type FormInputSchema = CommonSchema & {
 type FormDateRangeSchema = CommonSchema & {
   type: 'date-range'
   field: [string, string]
+  componentProps?: Omit<DateRangeProps, 'modelValue'>
 }
 
 export type FormSchema =
