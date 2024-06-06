@@ -1,10 +1,6 @@
 import type { FormSchema } from '../DynamicForm'
 import type { QueryKey } from '@tanstack/vue-query'
-import type {
-  ColProps,
-  TableColumnInstance,
-  PaginationProps
-} from 'element-plus'
+import type { ColProps, TableColumnInstance } from 'element-plus'
 import type { BasePageResp } from '~/api/types'
 
 type Form = Record<string, any>
@@ -15,9 +11,10 @@ export type InjectScaffoldRootContext = {
   data: Ref<BasePageResp<any> | undefined>
 }
 
-export type EPPagination = Required<
-  Pick<PaginationProps, 'pageSize' | 'currentPage'>
->
+export type EPPagination = {
+  pageSize: number
+  currentPage: number
+}
 export type Pagination = {
   current: number
   size: number

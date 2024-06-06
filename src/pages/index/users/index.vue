@@ -46,8 +46,11 @@ const { props } = useScaffold({
   },
   requestConfig: {
     queryKey: ['user'],
-    queryFn: async () => {
+    queryFn: async (params) => {
+      console.log('🚀 ~ queryFn: ~ params:', params)
       await sleep(2000)
+
+      console.log('🚀 ~ queryFn: ~ queryFn:')
       const r: BasePageResp<UserResp> = {
         data: {
           content: [

@@ -40,26 +40,51 @@ export function useProvideScaffold(props: ScaffoldProps) {
     Object.assign(form.value, resolveInitialForm(queryConfig.schemas))
     console.log('🚀 ~ useProvideScaffold ~ form:', form)
     // dataSource.value = [{ name: '43444' }]
+    pagination.value = {
+      pageSize: 20,
+      currentPage: 10
+    }
+  }
+
+  const onPaginationChange = (currentPage: number, pageSize: number) => {
+    console.log('🚀 ~ onPaginationChange ~ pageSize:', pageSize)
+    console.log('🚀 ~ onPaginationChange ~ currentPage:', currentPage)
+    pagination.value.currentPage = currentPage
+    pagination.value.pageSize = pageSize
+    refetch()
   }
 
   const { queryKey, queryFn } = requestConfig
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: [...queryKey, form, pagination],
     queryFn: () =>
-      queryFn({ ...form.value, ...transformPaginationParams(pagination) })
+      queryFn({ ...form.value, ...transformPaginationParams(pagination) }),
+    enabled: false
   })
+  // const data = ref({
+  //   data: {
+  //     content: [],
+  //     total: 100
+  //   }
+  // })
 
   provide(SCAFFOLD_ROOT_KEY, {
     schemas: queryConfig.schemas,
     form: readonly(form),
-    data,
-    updateForms
+    updateForms,
+    data
   })
+
+  refetch()
 
   return {
     form,
+    data,
     onQuery,
-    onReset
+    onReset,
+    pagination,
+    onPaginationChange,
+    refetch
   }
 }
 
