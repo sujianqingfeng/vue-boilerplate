@@ -1,14 +1,12 @@
 import type { FormSchema } from '../DynamicForm'
-import type { QueryKey } from '@tanstack/vue-query'
 import type { ColProps, TableColumnInstance } from 'element-plus'
-import type { BasePageResp } from '~/api/types'
+import type { BaseResp, PageResp } from '~/api/types'
 
 type Form = Record<string, any>
 export type InjectScaffoldRootContext = {
   schemas: FormSchema[]
   form: Ref<Form>
   updateForms: (data: Form) => void
-  data: Ref<BasePageResp<any> | undefined>
 }
 
 export type EPPagination = {
@@ -26,17 +24,19 @@ export type ScaffoldQueryProps = {
   formItemCol?: Partial<ColProps>
 }
 
-export type ScaffoldTableProps = {
-  columns: TableColumnInstance['$props'][]
+export type ScaffoldTableProps<K extends string | number | symbol> = {
+  columns: (TableColumnInstance['$props'] & { prop?: K })[]
 }
 
-export type ScaffoldProps = {
+export type ScaffoldProps<R, P> = {
   queryConfig: ScaffoldQueryProps
-  tableConfig: ScaffoldTableProps
+  tableConfig: ScaffoldTableProps<keyof R>
   requestConfig: {
-    queryKey: QueryKey
-    queryFn: (
-      params: Record<string, any> & Required<Pagination>
-    ) => Promise<BasePageResp<any>>
+    defaultPageSize?: number
+    apiFn: (
+      params: P
+    ) => Promise<
+      { data: BaseResp<PageResp<R>>; error: null } | { error: any; data: null }
+    >
   }
 }

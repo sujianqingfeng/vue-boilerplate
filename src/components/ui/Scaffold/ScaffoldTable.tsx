@@ -1,19 +1,15 @@
-import type { ScaffoldTableProps } from './types'
-import { ElTable, ElTableColumn } from 'element-plus'
-import { useScaffoldContext } from './composables/use-scaffold'
+import { ElTable, ElTableColumn, type TableColumnInstance } from 'element-plus'
 
 import 'element-plus/theme-chalk/el-table.css'
 import 'element-plus/theme-chalk/el-table-column.css'
 
 export default defineComponent(
-  ({ columns }) => {
-    const { data } = useScaffoldContext()
-
+  ({ columns, data }) => {
     return () => {
       return (
-        <ElTable data={data.value?.data.content ?? []}>
-          {columns.map((column) => (
-            <ElTableColumn {...column} />
+        <ElTable data={data}>
+          {columns.map((column, i) => (
+            <ElTableColumn {...column} key={i} />
           ))}
         </ElTable>
       )
@@ -22,7 +18,11 @@ export default defineComponent(
   {
     props: {
       columns: {
-        type: Array as PropType<ScaffoldTableProps['columns']>,
+        type: Array as PropType<TableColumnInstance['$props'][]>,
+        default: () => []
+      },
+      data: {
+        type: Array as PropType<any[]>,
         default: () => []
       }
     }

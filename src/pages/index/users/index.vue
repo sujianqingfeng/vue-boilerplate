@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { BasePageResp, UserResp } from '~/api/types'
-import { sleep } from '~/utils/basic'
+import { fetchUserPageListApi } from '~/features/user/api'
 
 definePage({
   meta: {
@@ -40,31 +39,12 @@ const { props } = useScaffold({
     columns: [
       {
         label: 'Name',
-        prop: 'username'
+        prop: 'name'
       }
     ]
   },
   requestConfig: {
-    queryKey: ['user'],
-    queryFn: async (params) => {
-      console.log('🚀 ~ queryFn: ~ params:', params)
-      await sleep(2000)
-
-      console.log('🚀 ~ queryFn: ~ queryFn:')
-      const r: BasePageResp<UserResp> = {
-        data: {
-          content: [
-            {
-              username: '11111',
-              age: 3,
-              id: 1
-            }
-          ],
-          total: 100
-        }
-      }
-      return r
-    }
+    apiFn: fetchUserPageListApi
   }
 })
 </script>

@@ -7,7 +7,7 @@ export const createSafePromise = <R = any, T extends any[] = any[]>(
 
   return async (
     ...rest: Parameters<typeof promiseFn>
-  ): Promise<{ data: R; error: null } | { data: null; error: any }> => {
+  ): Promise<{ data: R; error: null } | { data: null; error: unknown }> => {
     try {
       const data = await promiseFn(...rest)
       return { data, error: null }

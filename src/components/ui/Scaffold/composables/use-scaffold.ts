@@ -4,9 +4,9 @@ import type {
   Pagination,
   ScaffoldProps
 } from '../types'
-import type { InjectionKey } from 'vue'
-import { useQuery } from '@tanstack/vue-query'
-import { resolveInitialForm } from '../../DynamicForm'
+import { InjectionKey } from 'vue'
+import { mapFields, resolveInitialForm } from '../../DynamicForm'
+import { useRequestPage } from '~/composables/use-request'
 
 export const SCAFFOLD_ROOT_KEY = Symbol(
   'InjectScaffoldRootContext'
@@ -17,14 +17,16 @@ function transformPaginationParams(pagination: Ref<EPPagination>): Pagination {
   return { current: pageNo, size: pageSize }
 }
 
-export function useProvideScaffold(props: ScaffoldProps) {
-  const { queryConfig, requestConfig } = props
+export function useProvideScaffold<R, P>(props: ScaffoldProps<R, P>) {
+  const {
+    queryConfig,
+    requestConfig: { apiFn, defaultPageSize = 20 }
+  } = props
 
   const initialForm = resolveInitialForm(queryConfig.schemas)
   const form = ref<Record<string, any>>(initialForm)
-  // const dataSource = ref<Record<string, any>[]>([{ name: '111' }])
   const pagination = ref<EPPagination>({
-    pageSize: 20,
+    pageSize: defaultPageSize,
     currentPage: 1
   })
 
@@ -33,58 +35,47 @@ export function useProvideScaffold(props: ScaffoldProps) {
   }
 
   const onQuery = () => {
-    console.log('🚀 ~ useProvideScaffold ~ form:', form)
-    // dataSource.value = [{ name: '222222' }]
+    fetchList()
   }
   const onReset = () => {
     Object.assign(form.value, resolveInitialForm(queryConfig.schemas))
-    console.log('🚀 ~ useProvideScaffold ~ form:', form)
-    // dataSource.value = [{ name: '43444' }]
     pagination.value = {
-      pageSize: 20,
-      currentPage: 10
+      pageSize: defaultPageSize,
+      currentPage: 1
     }
   }
 
-  const onPaginationChange = (currentPage: number, pageSize: number) => {
-    console.log('🚀 ~ onPaginationChange ~ pageSize:', pageSize)
-    console.log('🚀 ~ onPaginationChange ~ currentPage:', currentPage)
-    pagination.value.currentPage = currentPage
-    pagination.value.pageSize = pageSize
-    refetch()
+  const mapForm = () => {
+    return {
+      ...mapFields(queryConfig.schemas, form.value),
+      ...transformPaginationParams(pagination)
+    } as P
   }
 
-  const { queryKey, queryFn } = requestConfig
-  const { data, refetch } = useQuery({
-    queryKey: [...queryKey, form, pagination],
-    queryFn: () =>
-      queryFn({ ...form.value, ...transformPaginationParams(pagination) }),
-    enabled: false
+  const { list, total, fetchListApi } = useRequestPage({
+    apiFn,
+    params: mapForm()
   })
-  // const data = ref({
-  //   data: {
-  //     content: [],
-  //     total: 100
-  //   }
-  // })
+
+  const fetchList = () => {
+    fetchListApi(mapForm())
+  }
+
+  watch(pagination, fetchList, { deep: true })
 
   provide(SCAFFOLD_ROOT_KEY, {
     schemas: queryConfig.schemas,
     form: readonly(form),
-    updateForms,
-    data
+    updateForms
   })
-
-  refetch()
 
   return {
     form,
-    data,
-    onQuery,
-    onReset,
+    total,
+    list,
     pagination,
-    onPaginationChange,
-    refetch
+    onQuery,
+    onReset
   }
 }
 

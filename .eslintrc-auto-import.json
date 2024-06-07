@@ -302,6 +302,8 @@
     "usePerformanceObserver": true,
     "watchDeep": true,
     "watchImmediate": true,
-    "useScaffold": true
+    "useScaffold": true,
+    "useRequest": true,
+    "useRequestPage": true
   }
 }
