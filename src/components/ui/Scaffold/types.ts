@@ -1,6 +1,7 @@
 import type { FormSchema } from '../DynamicForm'
 import type { ColProps, TableColumnInstance } from 'element-plus'
 import type { BaseResp, PageResp } from '~/api/types'
+import { ActionsProps } from '../Actions'
 
 type Form = Record<string, any>
 export type InjectScaffoldRootContext = {
@@ -22,6 +23,17 @@ export type ScaffoldQueryProps = {
   schemas: FormSchema[]
   labelWidth?: string
   formItemCol?: Partial<ColProps>
+  action?: {
+    showQueryBt?: boolean
+    showResetBt?: boolean
+    queryBtText?: string
+    resetBtText?: string
+    span?: number
+  }
+}
+
+export type ScaffoldOperationProps = {
+  actions?: ActionsProps
 }
 
 export type ScaffoldTableProps<K extends string | number | symbol> = {
@@ -39,4 +51,5 @@ export type ScaffoldProps<R, P> = {
       { data: BaseResp<PageResp<R>>; error: null } | { error: any; data: null }
     >
   }
+  operationConfig?: ScaffoldOperationProps
 }

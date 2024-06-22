@@ -4,11 +4,11 @@ import 'element-plus/theme-chalk/el-table.css'
 import 'element-plus/theme-chalk/el-table-column.css'
 
 export default defineComponent(
-  ({ columns, data }) => {
+  (props) => {
     return () => {
       return (
-        <ElTable data={data}>
-          {columns.map((column, i) => (
+        <ElTable data={props.data}>
+          {props.columns.map((column, i) => (
             <ElTableColumn {...column} key={i} />
           ))}
         </ElTable>

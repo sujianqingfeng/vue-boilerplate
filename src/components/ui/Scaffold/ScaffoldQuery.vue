@@ -5,7 +5,14 @@ import { DynamicForm } from '../DynamicForm'
 
 withDefaults(defineProps<ScaffoldQueryProps>(), {
   formItemCol: () => ({ span: 6, md: 6, sm: 8, xs: 12 }),
-  labelWidth: '80px'
+  labelWidth: '80px',
+  action: () => ({
+    showQueryBt: true,
+    showResetBt: true,
+    queryBtText: '查询',
+    resetBtText: '重置',
+    span: 6
+  })
 })
 
 const emit = defineEmits<{
@@ -42,9 +49,13 @@ const { form, updateForms } = useScaffoldContext()
       </div>
     </el-col>
 
-    <el-col>
-      <el-button @click="onReset">重置</el-button>
-      <el-button type="primary" @click="onQuery">查询</el-button>
+    <el-col :span="action.span">
+      <el-button v-if="action.showResetBt" @click="onReset">
+        {{ action.resetBtText }}
+      </el-button>
+      <el-button v-if="action.showQueryBt" type="primary" @click="onQuery">
+        {{ action.queryBtText }}
+      </el-button>
     </el-col>
   </el-row>
 </template>

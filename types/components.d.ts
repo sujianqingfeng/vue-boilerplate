@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Actions: typeof import('./../src/components/ui/Actions/Actions.vue')['default']
     BaseDialog: typeof import('./../src/components/ui/BaseDialog.vue')['default']
     DateRange: typeof import('./../src/components/ui/DateRange/DateRange.vue')['default']
     DefaultLayout: typeof import('./../src/components/layouts/DefaultLayout.vue')['default']
@@ -29,11 +30,13 @@ declare module 'vue' {
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElSpace: typeof import('element-plus/es')['ElSpace']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     Query: typeof import('./../src/components/ui/Scaffold/Query.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Scaffold: typeof import('./../src/components/ui/Scaffold/Scaffold.vue')['default']
+    ScaffoldOperation: typeof import('./../src/components/ui/Scaffold/ScaffoldOperation.vue')['default']
     ScaffoldPagination: typeof import('./../src/components/ui/Scaffold/ScaffoldPagination.vue')['default']
     ScaffoldQuery: typeof import('./../src/components/ui/Scaffold/ScaffoldQuery.vue')['default']
     SelectWithOptions: typeof import('./../src/components/ui/SelectWithOptions/SelectWithOptions.vue')['default']

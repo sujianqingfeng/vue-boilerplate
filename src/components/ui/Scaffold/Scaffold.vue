@@ -10,13 +10,13 @@ const { onQuery, onReset, total, list, pagination } = useProvideScaffold(props)
 
 <template>
   <ScaffoldQuery v-bind="queryConfig" @query="onQuery" @reset="onReset" />
+  <ScaffoldOperation v-bind="operationConfig" />
   <ScaffoldTable :columns="tableConfig.columns" :data="list" />
-  <div>
-    {{ list }}
+  <div class="mt-4 flex justify-end items-center">
     <el-pagination
       v-model:current-page="pagination.currentPage"
       v-model:page-size="pagination.pageSize"
-      :page-count="total"
+      :total="total"
     />
   </div>
 </template>

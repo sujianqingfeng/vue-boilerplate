@@ -45,6 +45,18 @@ const { props } = useScaffold({
   },
   requestConfig: {
     apiFn: fetchUserPageListApi
+  },
+  operationConfig: {
+    actions: {
+      list: [
+        {
+          title: 'Create',
+          onClick: () => {
+            console.log('🚀 ~ onClick:')
+          }
+        }
+      ]
+    }
   }
 })
 </script>
