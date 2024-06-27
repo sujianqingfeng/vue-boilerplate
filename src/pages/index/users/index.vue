@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { fetchUserPageListApi } from '~/features/user/api'
+import { ShowParams } from '~/features/user/components/AddUserDialogTemplate/types'
 
 definePage({
   meta: {
     title: 'Index'
   }
 })
+
+const { showDialog } = useTemplateDialog<ShowParams>(
+  () => import('~/features/user/components/AddUserDialogTemplate')
+)
 
 const { props } = useScaffold({
   queryConfig: {
@@ -53,6 +58,7 @@ const { props } = useScaffold({
           title: 'Create',
           onClick: () => {
             console.log('🚀 ~ onClick:')
+            showDialog({})
           }
         }
       ]

@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Actions: typeof import('./../src/components/ui/Actions/Actions.vue')['default']
     BaseDialog: typeof import('./../src/components/ui/BaseDialog.vue')['default']
+    BasicDialog: typeof import('./../src/components/ui/BasicDialog.vue')['default']
     DateRange: typeof import('./../src/components/ui/DateRange/DateRange.vue')['default']
     DefaultLayout: typeof import('./../src/components/layouts/DefaultLayout.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
@@ -17,6 +18,7 @@ declare module 'vue' {
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']

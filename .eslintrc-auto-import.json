@@ -304,6 +304,7 @@
     "watchImmediate": true,
     "useScaffold": true,
     "useRequest": true,
-    "useRequestPage": true
+    "useRequestPage": true,
+    "useTemplateDialog": true
   }
 }
