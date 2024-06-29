@@ -58,7 +58,11 @@ const { props } = useScaffold({
           title: 'Create',
           onClick: () => {
             console.log('🚀 ~ onClick:')
-            showDialog({})
+            showDialog({
+              onConfirm: (data) => {
+                console.log('🚀 ~ data:', data)
+              }
+            })
           }
         }
       ]

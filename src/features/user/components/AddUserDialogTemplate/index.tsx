@@ -3,6 +3,10 @@ import type { ShowParams } from './types'
 const LazyAddUserDialogTemplate = defineComponent((_, { expose }) => {
   const onConfirm = () => {
     console.log('confirm')
+
+    return {
+      name: 'name'
+    }
   }
 
   const show = (options: ShowParams) => {

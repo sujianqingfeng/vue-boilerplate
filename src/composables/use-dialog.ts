@@ -1,20 +1,21 @@
 import { ComponentInternalInstance, VNode, render } from 'vue'
 import BasicDialog from '~/components/ui/BasicDialog.vue'
 
-type DialogContext = {
+type DialogContext<T> = {
   hide: () => void
   instance: ComponentInternalInstance | null | undefined
   startLoading: () => void
   stopLoading: () => void
+  result?: T
 }
 
-type ShowDialogOptions<T> = {
-  onCancel?: (dialogContext: DialogContext) => void
-  onConfirm?: (dialogContext: DialogContext) => void
+type ShowDialogOptions<T, R> = {
+  onCancel?: (dialogContext: DialogContext<R>) => void
+  onConfirm?: (dialogContext: DialogContext<R>) => void
   showParams?: T
 }
 
-export function useTemplateDialog<T = any>(template: () => any) {
+export function useTemplateDialog<T = any, R = any>(template: () => any) {
   const visible = ref(true)
   const loading = ref(false)
 
@@ -29,7 +30,7 @@ export function useTemplateDialog<T = any>(template: () => any) {
 
   onUnmounted(unmounted)
 
-  const showDialog = async (options: ShowDialogOptions<T>) => {
+  const showDialog = async (options: ShowDialogOptions<T, R>) => {
     visible.value = true
     loading.value = false
 
@@ -52,7 +53,7 @@ export function useTemplateDialog<T = any>(template: () => any) {
       loading.value = true
     }
 
-    const getDialogContext = (): DialogContext => {
+    const getDialogContext = (): DialogContext<R> => {
       return {
         hide,
         instance: slotVNode?.component,
@@ -92,13 +93,13 @@ export function useTemplateDialog<T = any>(template: () => any) {
               onConfirm: () => {
                 const dialogContext = getDialogContext()
 
-                const _onConfirm = dialogContext.instance?.exposed
+                const _onConfirm = dialogContext.instance?.exposed?.onConfirm
 
-                const executeOnConfirm = (result: any) => {
-                  onConfirm && onConfirm(result)
+                const executeOnConfirm = (context: DialogContext<R>) => {
+                  onConfirm && onConfirm(context)
                 }
 
-                if (_onConfirm && _onConfirm.) {
+                if (_onConfirm && typeof _onConfirm === 'function') {
                   const r = _onConfirm()
                   if (typeof r === 'undefined') {
                     executeOnConfirm(dialogContext)
@@ -110,7 +111,7 @@ export function useTemplateDialog<T = any>(template: () => any) {
                       })
                     })
                   } else {
-                    executeOnConfirm(dialogContext)
+                    executeOnConfirm({ ...dialogContext, result: r })
                   }
                 } else {
                   executeOnConfirm(dialogContext)

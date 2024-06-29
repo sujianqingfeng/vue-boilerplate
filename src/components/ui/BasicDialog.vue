@@ -33,7 +33,7 @@ const onConfirm = () => {
     <slot></slot>
 
     <template v-if="showFooter" #footer>
-      <div class="text-center">
+      <div class="text-right">
         <el-button @click="onCancel">取消</el-button>
         <el-button type="primary" :loading="loading" @click="onConfirm">
           确定

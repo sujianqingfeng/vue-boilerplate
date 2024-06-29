@@ -23,6 +23,7 @@
     "sujian",
     "tanstack",
     "unocss",
-    "unplugin"
+    "unplugin",
+    "vueuse"
   ]
 }

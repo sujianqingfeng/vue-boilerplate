@@ -5,6 +5,10 @@ const collapse = defineModel<boolean>('collapse')
 const onToggle = () => {
   collapse.value = !collapse.value
 }
+
+const onCommand = (command: string) => {
+  console.log('🚀 ~ onCommand ~ command:', command)
+}
 </script>
 
 <template>
@@ -16,11 +20,11 @@ const onToggle = () => {
       </el-icon>
     </div>
     <div>
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command="onCommand">
         <el-avatar :size="30">U</el-avatar>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>Action 2</el-dropdown-item>
+            <el-dropdown-item command="logout">logout</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
